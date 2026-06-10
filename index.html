@@ -3,54 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>SIKERJA - Pemaparan Sistem</title>
-  <!-- html2pdf library (latest stable) -->
+  <title>SIKERJA - Pemaparan Sistem Terintegrasi</title>
+  <!-- html2pdf library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-      background: linear-gradient(145deg, #eef2f9 0%, #f9fbfe 100%);
-      padding: 24px 16px;
-      color: #1e2f3e;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background: #f0f4f9;
+      padding: 32px 24px;
+      color: #1a2c3e;
+    }
+
+    /* container utama lebih lebar dan rapi */
     .container {
-      max-width: 800px;
+      max-width: 1100px;
       margin: 0 auto;
     }
-    /* tombol download dalam baris atas */
+
+    /* header actions: tombol dan PDF */
     .header-actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 16px;
+      margin-bottom: 28px;
     }
-    .btn-home {
-      background: #1e4663;
-      color: white;
-      border: none;
+
+    .btn-outline {
+      background: white;
+      border: 1px solid #cbd5e1;
       padding: 10px 20px;
       border-radius: 40px;
       font-weight: 600;
       font-size: 0.85rem;
+      color: #1e4663;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      text-decoration: none;
       transition: 0.2s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-decoration: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }
-    .btn-home:hover {
-      background: #0f2e46;
+
+    .btn-outline:hover {
+      background: #f8fafc;
+      border-color: #0066b4;
       transform: translateY(-1px);
     }
+
     .btn-pdf {
-      background: #d32f2f;
-      color: white;
+      background: #dc2626;
       border: none;
+      color: white;
       padding: 10px 24px;
       border-radius: 40px;
       font-weight: 700;
@@ -60,297 +72,439 @@
       align-items: center;
       gap: 10px;
       transition: 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
+
     .btn-pdf:hover {
-      background: #b71c1c;
+      background: #b91c1c;
       transform: translateY(-1px);
     }
-    .card {
-      background: white;
-      border-radius: 32px;
-      padding: 24px 20px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.03);
-      border: 1px solid rgba(0,102,180,0.1);
+
+    /* gaya kartu modern seperti contoh (kartu putih, bayangan halus, sudut 24px) */
+    .card-modern {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 28px 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.05);
       transition: all 0.2s;
+      border: 1px solid #eef2f8;
     }
-    /* tata cetak: saat generate PDF, background tetap dan elemen tetap rapi */
-    @media print {
-      body {
-        background: white;
-        padding: 0;
-        margin: 0;
-      }
-      .btn-pdf, .btn-home, .header-actions .btn-home, .header-actions .btn-pdf {
-        display: none !important;
-      }
-      .container {
-        max-width: 100%;
-        padding: 0;
-      }
-      .card {
-        break-inside: avoid;
-        page-break-inside: avoid;
-        box-shadow: none;
-        border: 1px solid #ddd;
-      }
-      .logo-item img {
-        max-height: 48px;
-      }
-      .role-table td, .role-table th {
-        border: 1px solid #aaa;
-      }
-    }
-    h1 {
-      font-size: 1.9rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #0066b4, #004b8f);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 8px;
-    }
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 16px 0 12px;
-      color: #0a2b44;
-      border-left: 5px solid #0066b4;
-      padding-left: 16px;
-    }
-    h3 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 16px 0 8px;
-      color: #1e4663;
-    }
-    .badge {
-      display: inline-block;
-      background: #eef2fa;
-      padding: 6px 14px;
-      border-radius: 60px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #0066b4;
-      margin-bottom: 12px;
-    }
-    .logo-row {
+
+    /* logo & header */
+    .logo-badge-row {
       display: flex;
-      justify-content: center;
-      gap: 20px;
+      justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      gap: 20px;
+      margin-bottom: 16px;
     }
+
+    .logo-group {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
     .logo-item {
-      background: white;
-      border-radius: 20px;
-      padding: 8px 16px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-    .logo-item img {
-      height: 48px;
-      width: auto;
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin: 16px 0;
-    }
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
-    }
-    .icon-card {
-      text-align: center;
       background: #f8fafd;
-      border-radius: 28px;
-      padding: 16px 8px;
+      padding: 6px 18px 6px 14px;
+      border-radius: 60px;
     }
+
+    .logo-item img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-item span {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #0f3b5c;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      background: #eef2ff;
+      padding: 6px 16px;
+      border-radius: 40px;
+      color: #0066b4;
+      font-weight: 500;
+    }
+
+    /* headline modern */
+    .headline {
+      text-align: center;
+      margin: 20px 0 10px;
+    }
+
+    .headline h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b3954, #0066b4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .headline p {
+      font-size: 1rem;
+      color: #2c4c6e;
+      margin-top: 8px;
+    }
+
+    /* latar belakang grid dengan 4 item ikon + teks sesuai permintaan */
+    .latar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .latar-card {
+      background: #fafcff;
+      border-radius: 24px;
+      padding: 22px 16px;
+      text-align: center;
+      border: 1px solid #e9edf2;
+      transition: all 0.2s;
+    }
+
+    .latar-emoji {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+    }
+
+    .latar-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1e4663;
+    }
+
+    .latar-card p {
+      font-size: 0.85rem;
+      color: #4a627a;
+      line-height: 1.4;
+    }
+
+    /* dasar hukum styling */
+    .legal-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .legal-chip {
+      background: #eef2fa;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #1e4663;
+    }
+
+    /* grid inovasi */
+    .inovasi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin: 24px 0 8px;
+    }
+
+    .inovasi-card {
+      background: #f8fafd;
+      border-radius: 24px;
+      padding: 18px 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0f2b40;
+      border: 1px solid #eef2f8;
+    }
+
+    /* risk chips */
+    .risk-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      justify-content: center;
+    }
+
     .risk-chip {
+      padding: 10px 24px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.85rem;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
-      border-radius: 60px;
-      font-size: 0.75rem;
-      font-weight: 600;
     }
-    .risk-hijau { background: #e8f5e9; color: #2e7d32; }
-    .risk-kuning { background: #fff8e1; color: #f57c00; }
-    .risk-oranye { background: #fff3e0; color: #e65100; }
-    .risk-merah { background: #ffebee; color: #c62828; }
-    .flow-step {
+
+    .risk-hijau {
+      background: #e0f2e9;
+      color: #1f7840;
+    }
+
+    .risk-kuning {
+      background: #fff1df;
+      color: #c45c00;
+    }
+
+    .risk-oranye {
+      background: #ffe6d5;
+      color: #c73e00;
+    }
+
+    .risk-merah {
+      background: #ffe6e5;
+      color: #bc1c2e;
+    }
+
+    /* alur langkah modern */
+    .steps-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .step-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
-      background: #fafcff;
-      padding: 12px 16px;
-      border-radius: 28px;
+      gap: 18px;
+      background: #fbfdff;
+      border-radius: 60px;
+      padding: 8px 20px 8px 10px;
+      border: 1px solid #eef2fa;
     }
-    .step-number {
-      width: 40px;
-      height: 40px;
+
+    .step-number-circle {
+      width: 44px;
+      height: 44px;
       background: #0066b4;
       color: white;
-      border-radius: 40px;
+      border-radius: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+      font-weight: 800;
+      font-size: 1.2rem;
     }
+
+    .step-text {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    /* tabel peran modern */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
     .role-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.75rem;
-      margin: 16px 0;
+      margin: 20px 0;
+      border-radius: 20px;
+      overflow: hidden;
     }
-    .role-table th, .role-table td {
+
+    .role-table th,
+    .role-table td {
       border: 1px solid #e2e8f0;
-      padding: 10px 8px;
+      padding: 12px 10px;
       text-align: left;
       vertical-align: top;
     }
+
     .role-table th {
       background: #eef2fa;
       font-weight: 700;
       color: #0a2b44;
     }
-    .role-table td {
-      background: white;
-    }
+
     .akses-badge {
-      display: inline-block;
-      background: #e8f5e9;
-      color: #2e7d32;
-      padding: 2px 8px;
-      border-radius: 20px;
+      background: #e0f2e9;
+      color: #1f7840;
+      padding: 4px 10px;
+      border-radius: 30px;
       font-size: 0.7rem;
+      display: inline-block;
       margin: 2px 4px 2px 0;
     }
+
     .akses-badge.readonly {
-      background: #fff8e1;
-      color: #f57c00;
+      background: #fff0db;
+      color: #b85c00;
     }
+
     footer {
       text-align: center;
       margin-top: 32px;
-      padding: 20px;
+      padding: 24px;
       font-size: 0.7rem;
-      color: #6c86a3;
-      border-top: 1px solid #e6edf4;
+      color: #5f7d9c;
+      border-top: 1px solid #e2eaf1;
     }
-    @media (max-width: 560px) {
-      .card { padding: 20px 16px; }
-      h1 { font-size: 1.6rem; }
-      .role-table th, .role-table td { padding: 8px 6px; }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .btn-pdf,
+      .btn-outline,
       .header-actions {
-        flex-direction: column;
-        align-items: stretch;
+        display: none !important;
       }
-      .btn-home, .btn-pdf {
-        justify-content: center;
+
+      .card-modern {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
       }
     }
-    /* loading indicator halus */
+
     .pdf-loading {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #1e4663;
+      bottom: 24px;
+      right: 24px;
+      background: #1f2f3e;
       color: white;
-      padding: 10px 18px;
-      border-radius: 40px;
+      padding: 10px 20px;
+      border-radius: 60px;
       font-size: 0.8rem;
-      font-weight: 500;
-      z-index: 999;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       opacity: 0;
       transition: opacity 0.2s;
       pointer-events: none;
+      z-index: 999;
     }
+
     .pdf-loading.show {
       opacity: 1;
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 20px 16px;
+      }
+      .card-modern {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
 <div class="container">
-  <!-- Baris aksi: tombol kembali dan tombol download PDF -->
+  <!-- baris tombol -->
   <div class="header-actions">
-    <a href="?view=app" class="btn-home">← Kembali ke Aplikasi Utama</a>
+    <!-- tombol membuka aplikasi utama di tab baru (target _blank) -->
+    <a href="https://mrjoe-art.github.io/sikerja/" target="_blank" class="btn-outline">
+      🏠 Buka Aplikasi Utama (SIKERJA MOBILE)
+    </a>
     <button id="downloadPDFBtn" class="btn-pdf">
       📄 Download to PDF
     </button>
   </div>
 
-  <!-- Seluruh konten yang akan diekspor ke PDF -->
+  <!-- konten yang akan di-export PDF -->
   <div id="pdfContent">
-    <!-- Logo Polda & Pemda -->
-    <div class="logo-row">
-      <div class="logo-item">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhzG_tyhj6bLpVB7setzCdpeVDiCPeYqzQ2GrAGcXVYUY6WCFeTwfgwjoxGVvn5vS89I2uypuIdmUAYdTniZp5DqiBVxMCSQOw3Gy9NQxQq1YoAmUg1yDEGDufbw8qrgfPJzk5HU6uFZnTk05TuwK6jVHQ3q9KYi1sDij-Qd5DaqDh6vZiWfLIJ_NAwR-qP/w149-h200/WhatsApp%20Image%202026-06-08%20at%2011.52.14%20(1).jpeg" alt="Polda Metro Jaya">
-        <span>POLDA METRO JAYA</span>
+    <!-- logo & badge -->
+    <div class="logo-badge-row">
+      <div class="logo-group">
+        <div class="logo-item">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhzG_tyhj6bLpVB7setzCdpeVDiCPeYqzQ2GrAGcXVYUY6WCFeTwfgwjoxGVvn5vS89I2uypuIdmUAYdTniZp5DqiBVxMCSQOw3Gy9NQxQq1YoAmUg1yDEGDufbw8qrgfPJzk5HU6uFZnTk05TuwK6jVHQ3q9KYi1sDij-Qd5DaqDh6vZiWfLIJ_NAwR-qP/w149-h200/WhatsApp%20Image%202026-06-08%20at%2011.52.14%20(1).jpeg" alt="Polda Metro Jaya">
+          <span>POLDA METRO JAYA</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEa8npiKFKfdI9POvaaoKAcSIguv05Oj09646J_pNJunpn1HcP9geCt0q9Ul7JV4v0e_IfdGDgZ6EgHT0eEKNTIgOwjg62OjG0L4nzMhtcPxLRumqJbDl5r5CKiqKMnW_2u6eml603ug2ROx8xIvldOqFpFv8DUfIIO6xG0LzC-AV274tFB47KwJFG2gsu/w184-h200/WhatsApp%20Image%202026-06-08%20at%2011.52.14.jpeg" alt="Pemda Bekasi">
+          <span>PEMDA BEKASI</span>
+        </div>
       </div>
-      <div class="logo-item">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEa8npiKFKfdI9POvaaoKAcSIguv05Oj09646J_pNJunpn1HcP9geCt0q9Ul7JV4v0e_IfdGDgZ6EgHT0eEKNTIgOwjg62OjG0L4nzMhtcPxLRumqJbDl5r5CKiqKMnW_2u6eml603ug2ROx8xIvldOqFpFv8DUfIIO6xG0LzC-AV274tFB47KwJFG2gsu/w184-h200/WhatsApp%20Image%202026-06-08%20at%2011.52.14.jpeg" alt="Pemda Bekasi">
-        <span>PEMDA BEKASI</span>
-      </div>
+      <div class="tagline">Sistem Informasi Ketenagakerjaan Terpadu</div>
     </div>
 
-    <!-- Header -->
-    <div class="card" style="text-align: center;">
+    <!-- headline utama -->
+    <div class="headline">
       <h1>SIKERJA</h1>
-      <p style="font-weight: 500;">Sistem Informasi Ketenagakerjaan Terpadu</p>
-      <p>Deteksi Dini – Koordinasi Empat Pilar – Resolusi Konflik</p>
+      <p>Deteksi Dini – Koordinasi Empat Pilar – Resolusi Konflik Berbasis Risiko</p>
     </div>
 
-    <!-- Latar Belakang -->
-    <div class="card">
-      <div class="badge">LATAR BELAKANG</div>
-      <div class="grid-2">
-        <div>⚠️ Konflik ketenagakerjaan meningkat</div>
-        <div>📢 Informasi tidak terintegrasi</div>
-        <div>⚖️ Mediasi belum berbasis risiko</div>
-        <div>🚨 Potensi gangguan kamtibmas</div>
+    <!-- LATAR BELAKANG sesuai teks yang diminta : 4 poin dengan ikon & teks -->
+    <div class="card-modern">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+        <span style="font-size: 1.8rem;">📋</span>
+        <h2 style="font-size: 1.5rem; font-weight: 700; color: #0a2b44;">LATAR BELAKANG</h2>
+      </div>
+      <div class="latar-grid">
+        <div class="latar-card">
+          <div class="latar-emoji">⚠️</div>
+          <h4>Konflik ketenagakerjaan meningkat</h4>
+          <p>Meningkatnya potensi perselisihan antar pekerja dan perusahaan di wilayah hukum Polres Metro Bekasi.</p>
+        </div>
+        <div class="latar-card">
+          <div class="latar-emoji">📢</div>
+          <h4>Informasi tidak terintegrasi</h4>
+          <p>Data dan laporan masih tersebar di berbagai instansi tanpa platform kolaborasi real-time.</p>
+        </div>
+        <div class="latar-card">
+          <div class="latar-emoji">⚖️</div>
+          <h4>Mediasi belum berbasis risiko</h4>
+          <p>Belum ada skoring risiko kamtibmas untuk menentukan prioritas penanganan konflik.</p>
+        </div>
+        <div class="latar-card">
+          <div class="latar-emoji">🚨</div>
+          <h4>Potensi gangguan kamtibmas</h4>
+          <p>Konflik yang tidak tertangani dini dapat memicu aksi massa, unjuk rasa, dan gangguan keamanan.</p>
+        </div>
       </div>
     </div>
 
-    <!-- Dasar Hukum -->
-    <div class="card">
-      <div class="badge">DASAR HUKUM</div>
-      <ul style="margin-left: 20px; line-height: 1.6;">
-        <li>UU No 2/2002 tentang Kepolisian</li>
-        <li>UU No 13/2003 tentang Ketenagakerjaan</li>
-        <li>UU No 25/2009 tentang Pelayanan Publik</li>
-        <li>Perpres No 95/2018 tentang SPBE</li>
-        <li>Program Prioritas Kapolri: peningkatan pelayanan terintegrasi</li>
-      </ul>
-    </div>
-
-    <!-- Inovasi -->
-    <div class="card">
-      <div class="badge">INOVASI</div>
-      <p><strong>SIKERJA</strong> adalah aplikasi berbasis web dari Polres Metro Bekasi bersama Disnaker, Apindo, dan Serikat Buruh untuk deteksi dini, skoring risiko kamtibmas, dan koordinasi terpadu penyelesaian konflik ketenagakerjaan secara humanis & presisi.</p>
-      <div class="grid-4">
-        <div class="icon-card">🔍 Deteksi Dini</div>
-        <div class="icon-card">📊 Skoring Risiko</div>
-        <div class="icon-card">🔄 Koordinasi 4 Pilar</div>
-        <div class="icon-card">⚖️ Mediasi & Resolusi</div>
+    <!-- DASAR HUKUM -->
+    <div class="card-modern">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+        <span>⚖️</span>
+        <h2 style="font-size: 1.4rem;">DASAR HUKUM</h2>
+      </div>
+      <div class="legal-list">
+        <span class="legal-chip">UU No 2/2002 tentang Kepolisian</span>
+        <span class="legal-chip">UU No 13/2003 Ketenagakerjaan</span>
+        <span class="legal-chip">UU No 25/2009 Pelayanan Publik</span>
+        <span class="legal-chip">Perpres No 95/2018 SPBE</span>
+        <span class="legal-chip">Program Prioritas Kapolri</span>
       </div>
     </div>
 
-    <!-- Skoring Risiko -->
-    <div class="card">
-      <div class="badge">SKORING RISIKO KAMTIBMAS</div>
-      <div class="grid-2">
+    <!-- INOVASI -->
+    <div class="card-modern">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+        <span>✨</span>
+        <h2 style="font-size: 1.4rem;">INOVASI</h2>
+      </div>
+      <p style="margin-bottom: 18px;"><strong>SIKERJA</strong> adalah aplikasi berbasis web dari Polres Metro Bekasi bersama Disnaker, Apindo, dan Serikat Buruh untuk deteksi dini, skoring risiko kamtibmas, dan koordinasi terpadu penyelesaian konflik ketenagakerjaan secara humanis & presisi.</p>
+      <div class="inovasi-grid">
+        <div class="inovasi-card">🔍 Deteksi Dini</div>
+        <div class="inovasi-card">📊 Skoring Risiko</div>
+        <div class="inovasi-card">🔄 Koordinasi 4 Pilar</div>
+        <div class="inovasi-card">⚖️ Mediasi & Resolusi</div>
+      </div>
+    </div>
+
+    <!-- SKORING RISIKO KAMTIBMAS -->
+    <div class="card-modern">
+      <h2 style="font-size: 1.4rem; margin-bottom: 14px;">⚠️ SKORING RISIKO KAMTIBMAS</h2>
+      <div class="risk-wrapper">
         <div class="risk-chip risk-hijau">🟢 Hijau : keluhan awal</div>
         <div class="risk-chip risk-kuning">🟡 Kuning : eskalasi isu</div>
         <div class="risk-chip risk-oranye">🟠 Oranye : mobilisasi massa</div>
@@ -358,151 +512,121 @@
       </div>
     </div>
 
-    <!-- Alur Sistem -->
-    <div class="card">
-      <div class="badge">ALUR SISTEM HOLISTIK</div>
-      <div class="flow-step"><div class="step-number">1</div> Registrasi & verifikasi akun</div>
-      <div class="flow-step"><div class="step-number">2</div> Input laporan konflik</div>
-      <div class="flow-step"><div class="step-number">3</div> Validasi & klasifikasi</div>
-      <div class="flow-step"><div class="step-number">4</div> Skoring risiko & notifikasi 4 pilar</div>
-      <div class="flow-step"><div class="step-number">5</div> Ruang koordinasi terpadu</div>
-      <div class="flow-step"><div class="step-number">6</div> Mediasi & resolusi</div>
-      <div class="flow-step"><div class="step-number">7</div> Monitoring kesepakatan & penutupan</div>
-      <div class="flow-step"><div class="step-number">8</div> Evaluasi & laporan tren konflik</div>
-    </div>
-
-    <!-- Fitur Aplikasi -->
-    <div class="card">
-      <div class="badge">FITUR APLIKASI</div>
-      <div class="grid-2">
-        <div>📋 Dashboard strategis</div>
-        <div>⚠️ Validasi & skoring risiko</div>
-        <div>💬 Ruang koordinasi (chat + timeline)</div>
-        <div>⚖️ Mediasi & berita acara digital</div>
-        <div>📊 Laporan tren konflik & daerah rawan</div>
-        <div>🔔 Notifikasi real-time</div>
+    <!-- ALUR SISTEM HOLISTIK (8 langkah) -->
+    <div class="card-modern">
+      <h2 style="font-size: 1.4rem; margin-bottom: 18px;">🔄 ALUR SISTEM HOLISTIK</h2>
+      <div class="steps-column">
+        <div class="step-item"><div class="step-number-circle">1</div><div class="step-text">Registrasi & verifikasi akun</div></div>
+        <div class="step-item"><div class="step-number-circle">2</div><div class="step-text">Input laporan konflik</div></div>
+        <div class="step-item"><div class="step-number-circle">3</div><div class="step-text">Validasi & klasifikasi</div></div>
+        <div class="step-item"><div class="step-number-circle">4</div><div class="step-text">Skoring risiko & notifikasi 4 pilar</div></div>
+        <div class="step-item"><div class="step-number-circle">5</div><div class="step-text">Ruang koordinasi terpadu</div></div>
+        <div class="step-item"><div class="step-number-circle">6</div><div class="step-text">Mediasi & resolusi</div></div>
+        <div class="step-item"><div class="step-number-circle">7</div><div class="step-text">Monitoring kesepakatan & penutupan</div></div>
+        <div class="step-item"><div class="step-number-circle">8</div><div class="step-text">Evaluasi & laporan tren konflik</div></div>
       </div>
     </div>
 
-    <!-- ========== AKSES BERDASARKAN PERAN ========== -->
-    <div class="card">
-      <div class="badge">👥 AKSES BERDASARKAN PERAN</div>
-      <p style="margin-bottom: 16px;">Berikut adalah daftar akun demo beserta hak aksesnya. Gunakan akun-akun ini untuk mencoba fitur sesuai kewenangan masing-masing.</p>
-      
-      <table class="role-table">
-        <thead>
-          <tr><th>Email</th><th>Password</th><th>Nama</th><th>Role</th><th>Perusahaan</th><th>Hak Akses</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>superadmin@polres.com</td><td>demo</td><td>Super Admin Polres</td><td>super_admin</td><td>-</td>
-            <td><span class="akses-badge">✅ Semua laporan</span> <span class="akses-badge">⚙️ Ubah risiko</span> <span class="akses-badge">📊 Dashboard penuh</span> <span class="akses-badge">🔔 Notifikasi</span> <span class="akses-badge">👥 Kelola user</span></td>
-          </tr>
-          <tr>
-            <td>disnaker@bekasi.go.id</td><td>demo</td><td>Disnaker Kab. Bekasi</td><td>disnaker_admin</td><td>-</td>
-            <td><span class="akses-badge">✅ Validasi laporan</span> <span class="akses-badge">⚖️ Jadwalkan mediasi</span> <span class="akses-badge">📝 Buat berita acara</span> <span class="akses-badge">⚠️ Ubah level risiko</span> <span class="akses-badge">📊 Monitoring</span></td>
-          </tr>
-          <tr>
-            <td>apindo@apindo.com</td><td>demo</td><td>APINDO Kab. Bekasi</td><td>apindo_admin</td><td>-</td>
-            <td><span class="akses-badge">🏢 Hubungi perusahaan</span> <span class="akses-badge">💬 Koordinasi</span> <span class="akses-badge">📋 Lihat laporan terkait</span> <span class="akses-badge">✅ Komitmen perusahaan</span></td>
-          </tr>
-          <tr>
-            <td>serikat@example.com</td><td>demo</td><td>Serikat Buruh</td><td>serikat_admin</td><td>-</td>
-            <td><span class="akses-badge">🗣️ Salurkan aspirasi</span> <span class="akses-badge">👥 Tunjuk perwakilan</span> <span class="akses-badge">💬 Koordinasi</span> <span class="akses-badge">📢 Update potensi massa</span></td>
-          </tr>
-          <tr>
-            <td>hrd@ptabc.com</td><td>demo</td><td>HRD PT ABC</td><td>hrd</td><td>PT ABC</td>
-            <td><span class="akses-badge">🏢 Lihat kasus perusahaannya saja</span> <span class="akses-badge">📋 Klarifikasi</span> <span class="akses-badge">💬 Koordinasi terbatas</span></td>
-          </tr>
-          <tr>
-            <td>pelapor@mobile.com</td><td>demo</td><td>Pelapor Mobile</td><td>pelapor</td><td>-</td>
-            <td><span class="akses-badge">➕ Input laporan baru</span> <span class="akses-badge">👁️ Lihat laporannya sendiri</span> <span class="akses-badge">📱 Tracking status</span></td>
-          </tr>
-          <tr>
-            <td>readonly@kapolres.com</td><td>demo</td><td>Kapolres Metro Bekasi</td><td>readonly</td><td>-</td>
-            <td><span class="akses-badge akses-badge readonly">👁️ Read only: dashboard strategis</span> <span class="akses-badge readonly">📈 Tren konflik</span> <span class="akses-badge readonly">⚠️ Status risiko</span> <span class="akses-badge readonly">📊 Laporan evaluasi</span></td>
-          </tr>
-        </tbody>
-      </table>
-      <p style="font-size: 0.75rem; margin-top: 12px; color: #5f7d9c;">💡 <strong>Catatan:</strong> Setiap akun hanya dapat mengakses data sesuai kewenangannya. Super Admin memiliki akses penuh, sedangkan HRD hanya melihat kasus perusahaannya sendiri.</p>
+    <!-- FITUR APLIKASI -->
+    <div class="card-modern">
+      <h2 style="font-size: 1.4rem; margin-bottom: 16px;">📱 FITUR APLIKASI</h2>
+      <div class="latar-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px,1fr));">
+        <div class="latar-card">📋 Dashboard strategis</div>
+        <div class="latar-card">⚠️ Validasi & skoring risiko</div>
+        <div class="latar-card">💬 Ruang koordinasi (chat + timeline)</div>
+        <div class="latar-card">⚖️ Mediasi & berita acara digital</div>
+        <div class="latar-card">📊 Laporan tren konflik & daerah rawan</div>
+        <div class="latar-card">🔔 Notifikasi real-time</div>
+      </div>
     </div>
 
-    <!-- Sumber Data -->
-    <div class="card">
-      <div class="badge">SUMBER DATA</div>
-      <p>Laporan resmi pekerja/HRD, data Disnaker, Apindo, Serikat Buruh, serta hasil koordinasi Polres Metro Bekasi. Tersimpan aman di Google Spreadsheet terintegrasi.</p>
+    <!-- AKSES BERDASARKAN PERAN (tabel ringkas) -->
+    <div class="card-modern">
+      <h2 style="font-size: 1.4rem;">👥 AKSES BERDASARKAN PERAN</h2>
+      <p style="margin: 12px 0 10px;">Akun demo dan hak akses sesuai kewenangan masing-masing di SIKERJA.</p>
+      <div class="table-responsive">
+        <table class="role-table">
+          <thead>
+            <tr><th>Email</th><th>Role</th><th>Hak Akses Utama</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>superadmin@polres.com</td><td>Super Admin Polres</td><td><span class="akses-badge">✅ Semua laporan</span> <span class="akses-badge">⚙️ Ubah risiko</span> <span class="akses-badge">📊 Dashboard penuh</span></td></tr>
+            <tr><td>disnaker@bekasi.go.id</td><td>Disnaker Kab. Bekasi</td><td><span class="akses-badge">✅ Validasi laporan</span> <span class="akses-badge">⚖️ Jadwalkan mediasi</span> <span class="akses-badge">⚠️ Ubah level risiko</span></td></tr>
+            <tr><td>apindo@apindo.com</td><td>APINDO Kab. Bekasi</td><td><span class="akses-badge">🏢 Hubungi perusahaan</span> <span class="akses-badge">💬 Koordinasi</span> <span class="akses-badge">📋 Lihat laporan terkait</span></td></tr>
+            <tr><td>serikat@example.com</td><td>Serikat Buruh</td><td><span class="akses-badge">🗣️ Salurkan aspirasi</span> <span class="akses-badge">👥 Tunjuk perwakilan</span> <span class="akses-badge">📢 Update potensi massa</span></td></tr>
+            <tr><td>hrd@ptabc.com</td><td>HRD PT ABC</td><td><span class="akses-badge">🏢 Lihat kasus perusahaannya saja</span> <span class="akses-badge">📋 Klarifikasi</span></td></tr>
+            <tr><td>pelapor@mobile.com</td><td>Pelapor Mobile</td><td><span class="akses-badge">➕ Input laporan baru</span> <span class="akses-badge">👁️ Lihat laporannya sendiri</span></td></tr>
+            <tr><td>readonly@kapolres.com</td><td>Read Only (Kapolres)</td><td><span class="akses-badge readonly">👁️ Read only dashboard strategis</span> <span class="akses-badge readonly">📈 Tren konflik</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.75rem; margin-top: 8px;">💡 Setiap akun hanya mengakses data sesuai kewenangan. Super Admin penuh, HRD hanya perusahaannya sendiri.</p>
     </div>
 
-    <!-- Penutup -->
-    <div class="card" style="text-align: center; background: #eef4fa;">
-      <p>“SIKERJA adalah fondasi transformasi digital penyelesaian konflik ketenagakerjaan di Kabupaten Bekasi. Terintegrasi, berbasis risiko, dan terhubung dengan 4 pilar untuk menciptakan ketenangan iklim usaha & kepercayaan publik.”</p>
-      <p style="margin-top: 16px;"><strong>Polres Metro Bekasi · Disnaker Kab. Bekasi · Apindo · Serikat Buruh</strong></p>
+    <!-- SUMBER DATA -->
+    <div class="card-modern">
+      <h2 style="font-size: 1.4rem;">📂 SUMBER DATA</h2>
+      <p>Laporan resmi pekerja/HRD, data Disnaker, Apindo, Serikat Buruh, serta hasil koordinasi Polres Metro Bekasi. Tersimpan aman dan terintegrasi secara real-time melalui sistem kolaborasi.</p>
+    </div>
+
+    <!-- PENUTUP QUOTE -->
+    <div class="card-modern" style="background: #f6fafe; text-align: center;">
+      <p style="font-style: italic; font-weight: 500;">“SIKERJA adalah fondasi transformasi digital penyelesaian konflik ketenagakerjaan di Kabupaten Bekasi. Terintegrasi, berbasis risiko, dan terhubung dengan 4 pilar untuk menciptakan ketenangan iklim usaha & kepercayaan publik.”</p>
+      <p style="margin-top: 16px; font-weight: 600;">Polres Metro Bekasi · Disnaker Kab. Bekasi · Apindo · Serikat Buruh</p>
     </div>
 
     <footer>
       Kompol Rudi Wiransyah Setiono, S.H., S.I.K., M.H.<br>
       (Serdik Sespimmen 66) · No Serdik 202601002167<br>
-      SIKERJA v1.0 · Sistem Informasi Ketenagakerjaan Terpadu
+      SIKERJA v2.0 · Sistem Informasi Ketenagakerjaan Terpadu
     </footer>
-  </div> <!-- penutup pdfContent -->
+  </div>
 </div>
 
-<!-- floating loading indicator -->
-<div id="pdfLoadingToast" class="pdf-loading">⏳ Membuat PDF, harap tunggu...</div>
+<div id="pdfLoadingToast" class="pdf-loading">⏳ Membuat dokumen PDF, harap tunggu...</div>
 
 <script>
   (function() {
     const downloadBtn = document.getElementById('downloadPDFBtn');
-    const elementToExport = document.getElementById('pdfContent');
+    const exportElement = document.getElementById('pdfContent');
     const toast = document.getElementById('pdfLoadingToast');
 
-    // Konfigurasi html2pdf: ukuran A4 portrait, margin rapi, tampilkan semua elemen dengan baik
-    const pdfOptions = {
-      margin:        [0.5, 0.5, 0.5, 0.5], // top, right, bottom, left (dalam satuan in)
-      filename:     'SIKERJA_Pemaparan_Sistem.pdf',
-      image:        { type: 'jpeg', quality: 0.95 },
-      html2canvas:  { scale: 2, letterRendering: true, useCORS: true, logging: false },
-      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    const pdfConfig = {
+      margin: [0.6, 0.6, 0.6, 0.6],
+      filename: 'SIKERJA_Pemaparan_Sistem.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { scale: 2, letterRendering: true, useCORS: true, logging: false },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
 
-    // fungsi show / hide loading
-    function showLoading(show) {
-      if (show) {
-        toast.classList.add('show');
-      } else {
-        toast.classList.remove('show');
-      }
+    function showLoader(show) {
+      if (show) toast.classList.add('show');
+      else toast.classList.remove('show');
     }
 
-    // pastikan gambar eksternal bisa termuat (gunakan CORS anonymous, karena logo dari blogspot)
-    // opsional: preload gambar agar tidak terpotong
-    function waitForImages() {
-      const images = document.querySelectorAll('#pdfContent img');
-      const promises = Array.from(images).map((img) => {
+    async function waitImages() {
+      const images = exportElement.querySelectorAll('img');
+      const promises = Array.from(images).map(img => {
         if (img.complete) return Promise.resolve();
-        return new Promise((resolve) => {
-          img.addEventListener('load', () => resolve());
-          img.addEventListener('error', () => resolve()); // tetap lanjut meskipun error
+        return new Promise(resolve => {
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
         });
       });
       return Promise.all(promises);
     }
 
     downloadBtn.addEventListener('click', async () => {
-      // memberikan umpan balik user
-      showLoading(true);
+      showLoader(true);
       try {
-        // tunggu semua gambar termuat (biar PDF sempurna)
-        await waitForImages();
-        // sedikit jeda agar stabilitas rendering lebih baik
-        await new Promise(r => setTimeout(r, 100));
-        // eksekusi html2pdf
-        await html2pdf().set(pdfOptions).from(elementToExport).save();
-      } catch (error) {
-        console.error('Gagal generate PDF:', error);
-        alert('Terjadi kesalahan saat membuat PDF. Coba lagi atau periksa koneksi internet.');
+        await waitImages();
+        await new Promise(r => setTimeout(r, 80));
+        await html2pdf().set(pdfConfig).from(exportElement).save();
+      } catch (err) {
+        console.error(err);
+        alert('Gagal membuat PDF, silakan ulangi.');
       } finally {
-        showLoading(false);
+        showLoader(false);
       }
     });
   })();
