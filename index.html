@@ -79,6 +79,44 @@
       transform: translateY(-1px);
     }
 
+    /* Tombol Android dan Web */
+    .btn-android {
+      background: #0066b4;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .btn-android:active {
+      transform: scale(0.96);
+      background: #004b8f;
+    }
+    .btn-web {
+      background: #34a853;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .btn-web:active {
+      transform: scale(0.96);
+      background: #2a8644;
+    }
+
     /* gaya kartu modern */
     .card-modern {
       background: #ffffff;
@@ -331,7 +369,7 @@
     }
     @media print {
       body { background: white; padding: 0; }
-      .btn-pdf, .btn-outline, .header-actions { display: none !important; }
+      .btn-pdf, .btn-outline, .btn-android, .btn-web, .header-actions { display: none !important; }
       .card-modern { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
       .legal-card { cursor: default; background: #f9f9f9; border: 1px solid #ddd; }
       .legal-card:hover { transform: none; box-shadow: none; }
@@ -369,9 +407,17 @@
 <body>
 <div class="container">
   <div class="header-actions">
-    <a href="https://mrjoe-art.github.io/sikerja/" target="_blank" class="btn-outline">
-      🏠 Buka Aplikasi Utama (SIKERJA MOBILE)
-    </a>
+    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+      <a href="https://play.google.com/store/apps/details?id=com.sofyan.myapp" target="_blank" class="btn-android">
+        📱 Join on Android
+      </a>
+      <a href="https://play.google.com/apps/testing/com.sofyan.myapp" target="_blank" class="btn-web">
+        🌐 Join on the Web
+      </a>
+      <a href="https://mrjoe-art.github.io/sikerja/" target="_blank" class="btn-outline">
+        🏠 Buka Aplikasi Utama (SIKERJA MOBILE)
+      </a>
+    </div>
     <button id="downloadPDFBtn" class="btn-pdf">
       📄 Download to PDF
     </button>
@@ -386,7 +432,7 @@
           <span>POLDA METRO JAYA</span>
         </div>
         <div class="logo-item">
-          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEa8npiKFKfdI9POvaaoKAcSIguv05Oj09646J_pNJunpn1HcP9geCt0q9Ul7JV4v0e_IfdGDgZ6EgHT0eEKNTIgOwjg62OjG0L4nzMhtcPxLRumqJbDl5r5CKiqKMnW_2u6eml603ug2ROx8xIvldOqFpFv8DUfIIO6xG0LzC-AV274tFB47KwJFG2gsu/w184-h200/WhatsApp%20Image%202026-06-08%20at%2011.52.14.jpeg" alt="Pemda Bekasi">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEa8npiKFKfdI9POvaaoKAcSIguv05Oj09646J_pNJunpn1HcP9geCt0q9Ul7JV4v0e_IfdGDgZ6EgHT0eEKNTIgOw62OjG0L4nzMhtcPxLRumqJbDl5r5CKiqKMnW_2u6eml603ug2ROx8xIvldOqFpFv8DUfIIO6xG0LzC-AV274tFB47KwJFG2gsu/w184-h200/WhatsApp%20Image%202026-06-08%20at%2011.52.14.jpeg" alt="Pemda Bekasi">
           <span>PEMDA BEKASI</span>
         </div>
       </div>
